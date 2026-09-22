@@ -1,0 +1,1 @@
+(()=>{const h=document.querySelector('.hero'),b=document.querySelector('.touch-target');if(!h||!b)return;const open=()=>{h.classList.add('hide');document.body.style.overflow='auto'};b.addEventListener('click',open,{passive:true});b.addEventListener('touchend',open,{passive:true});setTimeout(open,1800000);})();
