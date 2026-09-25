@@ -1,0 +1,54 @@
+name: Rename hero images safely
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/rename-hero-images.yml'
+permissions:
+  contents: write
+jobs:
+  rename:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rename 50 primary hero files and update every article reference
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          articles=sorted(Path('articles').glob('*/index.html'))
+          if len(articles)!=50: raise SystemExit(f'Expected 50 articles, found {len(articles)}')
+          for i,p in enumerate(articles,1):
+              n=f'{i:02d}'
+              old=Path(f'assets/heroes/{n}.webp')
+              new=Path(f'assets/heroes/attar-jannesar-nobari-{n}.webp')
+              if not old.exists() and not new.exists(): raise SystemExit(f'Missing hero {n}')
+              if old.exists(): old.rename(new)
+              s=p.read_text(encoding='utf-8')
+              s=s.replace(f'../../assets/heroes/{n}.webp',f'../../assets/heroes/attar-jannesar-nobari-{n}.webp')
+              s=s.replace(f'https://janwood110.github.io/assets/heroes/{n}.webp',f'https://janwood110.github.io/assets/heroes/attar-jannesar-nobari-{n}.webp')
+              p.write_text(s,encoding='utf-8')
+          print('renamed and updated 50 primary heroes')
+      - name: Verify no broken primary references
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          articles=sorted(Path('articles').glob('*/index.html'))
+          for i,p in enumerate(articles,1):
+              n=f'{i:02d}'
+              new=Path(f'assets/heroes/attar-jannesar-nobari-{n}.webp')
+              assert new.exists(), new
+              s=p.read_text(encoding='utf-8')
+              assert f'../../assets/heroes/attar-jannesar-nobari-{n}.webp' in s, p
+              assert f'https://janwood110.github.io/assets/heroes/attar-jannesar-nobari-{n}.webp' in s, p
+              assert not re.search(rf'(?<!-nobari-){n}\.webp', s), p
+          print('verified 50 renamed hero files and references')
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A assets/heroes articles
+          git diff --cached --quiet && exit 0
+          git commit -m "Rename 50 hero images to Attar Jannesar Nobari filenames"
+          git push
