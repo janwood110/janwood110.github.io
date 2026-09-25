@@ -1,0 +1,64 @@
+name: Sync real static crawl links
+
+on:
+  push:
+    paths:
+      - '.github/workflows/sync-static-links.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Copy exact static crawl block from source repository
+        run: |
+          python3 - <<'PY'
+          from urllib.request import urlopen
+          from pathlib import Path
+
+          source_url = 'https://raw.githubusercontent.com/jannesar-sciencee/jannesar-sciencee.github.io/main/index.html'
+          src = urlopen(source_url).read().decode('utf-8')
+          start = '<!-- STATIC-CRAWL-LINKS:START -->'
+          end = '<!-- STATIC-CRAWL-LINKS:END -->'
+          if start not in src or end not in src:
+              raise SystemExit('Source static block markers not found')
+          block = src[src.index(start):src.index(end)+len(end)]
+
+          for name in ['index.html', 'about/index.html']:
+              p = Path(name)
+              text = p.read_text(encoding='utf-8')
+              # Remove old dynamic importer so every URL exists in raw HTML.
+              marker = '<div id="all-links" class="links">'
+              i = text.find(marker)
+              if i < 0:
+                  raise SystemExit(f'all-links container not found in {name}')
+              content_start = i + len(marker)
+              content_end = text.find('</div>', content_start)
+              if content_end < 0:
+                  raise SystemExit(f'all-links closing div not found in {name}')
+              inner = '\n' + block + '\n'
+              text = text[:content_start] + inner + text[content_end:]
+              script_start = text.find('<script>(async()=>')
+              if script_start >= 0:
+                  script_end = text.find('</script>', script_start)
+                  if script_end >= 0:
+                      text = text[:script_start] + text[script_end+9:]
+              p.write_text(text, encoding='utf-8')
+          PY
+      - name: Verify and commit
+        run: |
+          grep -q 'STATIC-CRAWL-LINKS:START' index.html
+          grep -q '000260-cellular-senescence' index.html
+          grep -q 'jantex110.github.io/articles/50-borderless-trade' index.html
+          grep -q 'janwood110.github.io/articles/50-borderless-trade' index.html
+          grep -q 'jannesar110.blogfa.com/post/41' index.html
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html about/index.html
+          git diff --cached --quiet && exit 0
+          git commit -m 'Embed exact static crawl links from JANNESAR SCIENCE'
+          git push
