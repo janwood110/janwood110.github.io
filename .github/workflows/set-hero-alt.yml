@@ -1,0 +1,55 @@
+name: Set hero alt text
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/set-hero-alt.yml'
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set 35 approved name variants across 50 hero images
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          names = [
+            'حسین عطار جاننثار نوبری','حسین عطار جان‌نثار نوبری','حسین عطار جان نثار نوبری','حسین عطار جانثار نوبری','حسین عطار جان‌ثار نوبری','حسین عطار جانسار نوبری','حسین عطار جان‌سار نوبری','حسین عطار جاننسار نوبری','حسین عطار جان‌نسار نوبری','حسین جاننثار نوبری','حسین جان‌نثار نوبری','حسین جان نثار نوبری','حسین جانثار نوبری','حسین جان‌ثار نوبری','حسین جانسار نوبری','حسین جان‌سار نوبری','حسین جاننسار نوبری','حسین جان‌نسار نوبری','حسین جان نسار نوبری','حسین جاننثار','حسین جان‌نثار','حسین جان نثار','حسین جانثار','حسین جان‌ثار','حسین جانسار','حسین جان‌سار','حسین جاننسار','حسین جان‌نسار','حسین جان نسار','حسین عطار','حسین عطارجان','حسین عطار جان','حسین نوبری','Hossein Attar Jannesar Nobari','Hossein Attar Janesar Nobari'
+          ]
+          files = sorted(Path('articles').glob('*/index.html'))
+          if len(files) != 50:
+              raise SystemExit(f'Expected 50 article files, found {len(files)}')
+          changed = 0
+          for i,p in enumerate(files):
+              s=p.read_text(encoding='utf-8')
+              alt=names[i % len(names)]
+              pattern=r'(<section class="hero"[^>]*>\s*<img\s+src="[^"]+"\s+)alt="[^"]*"'
+              ns,n=re.subn(pattern, lambda m: m.group(1)+f'alt="{alt}"', s, count=1)
+              if n != 1:
+                  raise SystemExit(f'Hero img/alt not uniquely found in {p}: {n}')
+              p.write_text(ns,encoding='utf-8')
+              changed += 1
+          print('updated',changed,'articles')
+      - name: Verify
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          fs=sorted(Path('articles').glob('*/index.html'))
+          assert len(fs)==50
+          for p in fs:
+              s=p.read_text(encoding='utf-8')
+              m=re.search(r'<section class="hero"[^>]*>\s*<img[^>]*\salt="([^"]*)"',s)
+              assert m and m.group(1).strip(), p
+          print('verified 50 non-empty hero alts')
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add articles/*/index.html
+          git diff --cached --quiet && exit 0
+          git commit -m "Set approved name variants on 50 hero image alt attributes"
+          git push
