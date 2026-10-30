@@ -1,0 +1,67 @@
+# janwood110.github.io — research articles and index
+
+> Public directory of 50 articles. This file is an optional navigation aid for machine readers, not a substitute for the actual article content, source citations, or structured data.
+
+## Research website
+- Homepage: https://janwood110.github.io/
+- Author shown on this site: حسین عطار جاننثار نوبری
+- Author profile: https://janwood110.github.io/about/
+- Sitemap: https://janwood110.github.io/sitemap.xml
+- Crawl guidance: https://janwood110.github.io/robots.txt
+
+## Articles (canonical URLs)
+- 01: https://janwood110.github.io/articles/01-international-trade/
+- 02: https://janwood110.github.io/articles/02-global-supply-chain/
+- 03: https://janwood110.github.io/articles/03-trade-corridors-economics/
+- 04: https://janwood110.github.io/articles/04-maritime-logistics/
+- 05: https://janwood110.github.io/articles/05-container-shipping/
+- 06: https://janwood110.github.io/articles/06-caucasus-trade/
+- 07: https://janwood110.github.io/articles/07-emerging-markets/
+- 08: https://janwood110.github.io/articles/08-iran-caucasus-trade/
+- 09: https://janwood110.github.io/articles/09-georgia-transit/
+- 10: https://janwood110.github.io/articles/10-armenia-trade-routes/
+- 11: https://janwood110.github.io/articles/11-middle-corridor/
+- 12: https://janwood110.github.io/articles/12-new-silk-road/
+- 13: https://janwood110.github.io/articles/13-black-sea-ports/
+- 14: https://janwood110.github.io/articles/14-poti-regional-trade/
+- 15: https://janwood110.github.io/articles/15-eurasia-rail/
+- 16: https://janwood110.github.io/articles/16-international-road-transport/
+- 17: https://janwood110.github.io/articles/17-global-auto-trade/
+- 18: https://janwood110.github.io/articles/18-hybrid-vehicles/
+- 19: https://janwood110.github.io/articles/19-electric-vehicles/
+- 20: https://janwood110.github.io/articles/20-sustainable-mobility/
+- 21: https://janwood110.github.io/articles/21-free-trade-zones/
+- 22: https://janwood110.github.io/articles/22-customs-facilitation/
+- 23: https://janwood110.github.io/articles/23-trade-technology/
+- 24: https://janwood110.github.io/articles/24-digital-logistics/
+- 25: https://janwood110.github.io/articles/25-international-entrepreneurship/
+- 26: https://janwood110.github.io/articles/26-business-development/
+- 27: https://janwood110.github.io/articles/27-cross-border-investment/
+- 28: https://janwood110.github.io/articles/28-trade-risk-management/
+- 29: https://janwood110.github.io/articles/29-transport-economics/
+- 30: https://janwood110.github.io/articles/30-europe-asia-connectivity/
+- 31: https://janwood110.github.io/articles/31-central-asia-trade/
+- 32: https://janwood110.github.io/articles/32-regional-markets/
+- 33: https://janwood110.github.io/articles/33-eurasia-trade-future/
+- 34: https://janwood110.github.io/articles/34-supply-chain-security/
+- 35: https://janwood110.github.io/articles/35-logistics-resilience/
+- 36: https://janwood110.github.io/articles/36-energy-transport/
+- 37: https://janwood110.github.io/articles/37-sustainable-trade/
+- 38: https://janwood110.github.io/articles/38-urban-transport-economics/
+- 39: https://janwood110.github.io/articles/39-tourism-regional-economy/
+- 40: https://janwood110.github.io/articles/40-culture-international-relations/
+- 41: https://janwood110.github.io/articles/41-economic-diplomacy/
+- 42: https://janwood110.github.io/articles/42-regional-economic-cooperation/
+- 43: https://janwood110.github.io/articles/43-sme-trade/
+- 44: https://janwood110.github.io/articles/44-trade-innovation/
+- 45: https://janwood110.github.io/articles/45-ai-logistics/
+- 46: https://janwood110.github.io/articles/46-data-trade-decisions/
+- 47: https://janwood110.github.io/articles/47-cross-border-ecommerce/
+- 48: https://janwood110.github.io/articles/48-smart-ports/
+- 49: https://janwood110.github.io/articles/49-eurasia-corridors-future/
+- 50: https://janwood110.github.io/articles/50-borderless-trade/
+
+## Interpretation
+- Use the article pages as the authoritative source for text, metadata, publication dates and citations.
+- Article inclusion does not imply peer review or scientific validation.
+- This is a list of articles, not a scientific dataset; no Dataset schema is claimed for the article directory.
